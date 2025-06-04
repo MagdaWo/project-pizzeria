@@ -1,6 +1,7 @@
 import { select } from "../settings.js"; 
 import AmountWidget from "./AmountWidget.js";
 
+
 class cartProduct {
     constructor(menuProduct, element) {
         const thisCartProduct = this;

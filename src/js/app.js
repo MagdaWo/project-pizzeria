@@ -2,7 +2,7 @@ import { settings, select, classNames } from "./settings.js"
 import Product from "./components/Product.js";
 import Cart from "./components/Cart.js";
 import Booking from "./components/Booking.js";
-
+import DatePicker from "./components/DatePicker.js";
 
 const app = {
 
@@ -109,11 +109,21 @@ const app = {
     });
   },
 
-  initBooking: function() {
+  initBooking: function () {
     const thisApp = this;
 
     const bookingContainer = document.querySelector(select.containerOf.booking);
     thisApp.Booking = new Booking(bookingContainer);
+
+    const bookingWrapper = document.querySelector('.booking-wrapper');
+
+    if (bookingWrapper) {
+      const datePickerDiv = bookingWrapper.querySelector('.date-picker');
+
+      if (datePickerDiv) {
+        new DatePicker(datePickerDiv);
+      }
+    }
   },
 
   init: function () {
