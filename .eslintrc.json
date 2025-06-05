@@ -3,17 +3,26 @@
         "browser": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "parser": "@html-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@html-eslint/recommended"
+    ],
+    "plugins": [
+        "@html-eslint"
+    ],
     "parserOptions": {
         "ecmaVersion": 2015,
         "sourceType": "module"
     },
     "rules": {
-        "linebreak-style": [
-            "off"
-        ],
-        "no-console": [
-            "off"
+        "linebreak-style": "off",
+        "no-console": "off",
+        "@html-eslint/require-closing-tags": [
+            "error",
+            {
+                "selfClosing": "always"
+            }
         ]
     },
     "globals": {

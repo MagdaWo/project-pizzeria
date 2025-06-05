@@ -6,134 +6,134 @@ import DatePicker from "./components/DatePicker.js";
 
 const app = {
 
-  initPages: function () {
-    const thisApp = this;
+initPages: function () {
+const thisApp = this;
 
-    thisApp.pages = document.querySelector(select.containerOf.pages).children;
-    thisApp.navLinks = document.querySelectorAll(select.nav.links);
-    const idFromHash = window.location.hash.replace('#/', '');
+thisApp.pages = document.querySelector(select.containerOf.pages).children;
+thisApp.navLinks = document.querySelectorAll(select.nav.links);
+const idFromHash = window.location.hash.replace('#/', '');
 
-    let pageMatchingHash = thisApp.pages[0].id;
+let pageMatchingHash = thisApp.pages[0].id;
 
-    for (let page of thisApp.pages) {
-      if (page.id == idFromHash) {
-        pageMatchingHash = page.id;
-        break;
-      }
-    }
-    thisApp.activatePage(pageMatchingHash);
-
-
-
-    for (let link of thisApp.navLinks) {
-      link.addEventListener('click', function (event) {
-        const clickedElement = this;
-        event.preventDefault();
-
-        /* get page id from href attribute */
-        const id = clickedElement.getAttribute('href').replace('#', '');
-
-        /* run thisApp.activatePage with that id */
-        thisApp.activatePage(id);
-
-        /*change url hash */
-        window.location.hash = '#/' + id;
-      });
-    }
-  },
+for (let page of thisApp.pages) {
+if (page.id == idFromHash) {
+pageMatchingHash = page.id;
+break;
+}
+}
+thisApp.activatePage(pageMatchingHash);
 
 
-  activatePage: function (pageId) {
-    const thisApp = this;
-    /* add class "active to matching pages, remove from non-matching" */
-    for (let page of thisApp.pages) {
-      page.classList.toggle(classNames.pages.active, page.id == pageId);
-      /*if(page.id == pageId) {
-        page.classList.add(classNames.pages.active);
-      } else {
-        page.classList.remove(classNames.pages.active);
-      }
-    } */
-    }
-    /* add class "active to matching links, remove from non-matching" */
-    for (let link of thisApp.navLinks) {
-      link.classList.toggle(
-        classNames.nav.active,
-        link.getAttribute('href') == '#' + pageId
-      );
-    }
 
-  },
+for (let link of thisApp.navLinks) {
+link.addEventListener('click', function (event) {
+const clickedElement = this;
+event.preventDefault();
 
-  initMenu: function () {
-    const thisApp = this;
-    console.log('thisApp.data:', thisApp.data);
-    for (let productData of thisApp.data.products) {
-      new Product(productData.id, productData);
-    }
-  },
+/* get page id from href attribute */
+const id = clickedElement.getAttribute('href').replace('#', '');
 
-  initData: function () {
-    const thisApp = this;
-    thisApp.data = {};
-    const url = settings.db.url + '/' + settings.db.products;
+/* run thisApp.activatePage with that id */
+thisApp.activatePage(id);
 
-    fetch(url)
-      .then(function (rawResponse) {
-        return rawResponse.json();
-      })
-      .then(function (parsedResponse) {
-        console.log('[parsedResponse', parsedResponse);
-
-        // save parsedResponse as this.App.data.products
-        thisApp.data.products = parsedResponse;
-        //execute initMenu method
-        thisApp.initMenu();
-      });
-
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
-
-  },
+/*change url hash */
+window.location.hash = '#/' + id;
+});
+}
+},
 
 
-  initCart: function () {
-    const thisApp = this;
+activatePage: function (pageId) {
+const thisApp = this;
+/* add class "active to matching pages, remove from non-matching" */
+for (let page of thisApp.pages) {
+page.classList.toggle(classNames.pages.active, page.id == pageId);
+/*if(page.id == pageId) {
+page.classList.add(classNames.pages.active);
+} else {
+page.classList.remove(classNames.pages.active);
+}
+} */
+}
+/* add class "active to matching links, remove from non-matching" */
+for (let link of thisApp.navLinks) {
+link.classList.toggle(
+classNames.nav.active,
+link.getAttribute('href') == '#' + pageId
+);
+}
 
-    const cartElem = document.querySelector(select.containerOf.cart);
-    thisApp.cart = new Cart(cartElem);
+},
 
-    thisApp.productList = document.querySelector(select.containerOf.menu);
+initMenu: function () {
+const thisApp = this;
+console.log('thisApp.data:', thisApp.data);
+for (let productData of thisApp.data.products) {
+new Product(productData.id, productData);
+}
+},
 
-    thisApp.productList.addEventListener('add-to-cart', function (event) {
-      app.cart.add(event.detail.product);
-    });
-  },
+initData: function () {
+const thisApp = this;
+thisApp.data = {};
+const url = settings.db.url + '/' + settings.db.products;
 
-  initBooking: function () {
-    const thisApp = this;
+fetch(url)
+.then(function (rawResponse) {
+return rawResponse.json();
+})
+.then(function (parsedResponse) {
+console.log('[parsedResponse', parsedResponse);
 
-    const bookingContainer = document.querySelector(select.containerOf.booking);
-    thisApp.Booking = new Booking(bookingContainer);
+// save parsedResponse as this.App.data.products
+thisApp.data.products = parsedResponse;
+//execute initMenu method
+thisApp.initMenu();
+});
 
-    const bookingWrapper = document.querySelector('.booking-wrapper');
+console.log('thisApp.data', JSON.stringify(thisApp.data));
 
-    if (bookingWrapper) {
-      const datePickerDiv = bookingWrapper.querySelector('.date-picker');
+},
 
-      if (datePickerDiv) {
-        new DatePicker(datePickerDiv);
-      }
-    }
-  },
 
-  init: function () {
-    const thisApp = this;
+initCart: function () {
+const thisApp = this;
 
-    thisApp.initPages();
-    thisApp.initData();
-    thisApp.initCart();
-    thisApp.initBooking();
-  }
+const cartElem = document.querySelector(select.containerOf.cart);
+thisApp.cart = new Cart(cartElem);
+
+thisApp.productList = document.querySelector(select.containerOf.menu);
+
+thisApp.productList.addEventListener('add-to-cart', function (event) {
+app.cart.add(event.detail.product);
+});
+},
+
+initBooking: function () {
+const thisApp = this;
+
+const bookingContainer = document.querySelector(select.containerOf.booking);
+thisApp.Booking = new Booking(bookingContainer);
+
+const bookingWrapper = document.querySelector('.booking-wrapper');
+
+if (bookingWrapper) {
+const datePickerDiv = bookingWrapper.querySelector('.date-picker');
+
+if (datePickerDiv) {
+new DatePicker(datePickerDiv);
+}
+}
+},
+
+init: function () {
+const thisApp = this;
+
+thisApp.initPages();
+thisApp.initData();
+thisApp.initCart();
+thisApp.initBooking();
+}
 };
 
 //const testProduct = new Product();
