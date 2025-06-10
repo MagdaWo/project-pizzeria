@@ -2,9 +2,11 @@
 @import 'partials/typography';
 @import 'partials/global';
 @import 'partials/elements';
-
 @import 'partials/header';
 @import 'partials/cart';
-
 @import 'partials/product';
 @import 'partials/booking';
+.selected {
+    border: 3px solid #00cc99;
+    background-color: #d9f9f2;
+}
